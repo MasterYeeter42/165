@@ -31,12 +31,26 @@ AFRAME.registerComponent("enemy-bullets", {
             scene.appendChild(enemyBullet);
 
             //Three.js Vector Variables
-            
+            var position1 = new THREE.Vector3();
+            var position2 = new THREE.Vector3();
 
             //Get enemey and player position using Three.js methods
-            
+            var enemy = els[i].object3D;
+            var player = document.querySelector("#weapon").object3D;
 
+            player.getWorldPosition(position1);
+            enemy.getWorldPosition(position2);
             //set the velocity and it's direction
+            var direction = new THREE.Vector3();
+
+            direction.subVectors(position1, position2).normalise();
+
+            enemyBullet.setAttribute("velocity", direction.multiplyScalar(10));
+
+            enemyBullet.setAttribute("dynamic-body", {
+                shape: "sphere",
+                mass:"0",
+            });
             
             //Set dynamic-body attribute
             
@@ -49,6 +63,7 @@ AFRAME.registerComponent("enemy-bullets", {
                 if (e.detail.body.el.id === "weapon") {
 
                     //Add the conditions here
+                    if (playerLife > 0) {}
 
 
 
